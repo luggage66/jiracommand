@@ -18,7 +18,7 @@ namespace jiracommand
             catch (PowerArgs.ArgException argEx)
             {
                 Console.WriteLine(argEx.Message);
-                ArgUsage.GetStyledUsage<CommandArgs>().Write();
+                ArgUsage.GetStyledUsage<CommandArgs>(null, new ArgUsageOptions() { ShowType = false }).Write();
             }
 
         }
