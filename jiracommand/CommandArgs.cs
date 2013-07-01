@@ -25,26 +25,15 @@ namespace jiracommand
         {
         }
 
-        void PreCommand()
-        {
-            if (Server == null || Server.Length < 1)
-                Server = System.IO.File.ReadAllText(serverFile);
-
-            if (Token == null || Token.Length < 1)
-            {
-                if (System.IO.File.Exists(tokenFile))
-                    Token = System.IO.File.ReadAllText(tokenFile);
-            }
-        }
-
         [ArgActionMethod, ArgDescription("gets an auth token from the server")]
         public void Login(LoginArgs args)
         {
-            PreCommand();
-
             using (var jira = ConnectToJira())
             {
-                string token = jira.login(args.User, args.ResolvePassword());
+                string password = args.ResolvePassword();
+
+                string token = jira.login(args.User, password);
+
                 System.IO.File.WriteAllText(tokenFile, token);
             }
         }
@@ -52,8 +41,6 @@ namespace jiracommand
         [ArgActionMethod, ArgDescription("Create a Jira issue")]
         public void AddIssue(AddIssueArgs args)
         {
-            PreCommand();
-
             using (var jira = ConnectToJira())
             {
                 var issue = new RemoteIssue();
@@ -77,8 +64,6 @@ namespace jiracommand
         [ArgActionMethod, ArgDescription("See project options")]
         public void GetOptions(GetOptionsArgs args)
         {
-            PreCommand();
-
             using (var jira = ConnectToJira())
             {
                 var components = jira.getComponents(Token, Project);
@@ -111,8 +96,6 @@ namespace jiracommand
         [ArgActionMethod]
         public void Logout(LogoutArgs args)
         {
-            PreCommand();
-
             using (var jira = ConnectToJira())
             {
                 jira.logout(Token);
@@ -122,6 +105,15 @@ namespace jiracommand
 
         JiraSoapServiceClient ConnectToJira()
         {
+            if (Server == null || Server.Length < 1)
+                Server = System.IO.File.ReadAllText(serverFile);
+
+            if (Token == null || Token.Length < 1)
+            {
+                if (System.IO.File.Exists(tokenFile))
+                    Token = System.IO.File.ReadAllText(tokenFile);
+            }
+
             return new JiraSoapServiceClient("jirasoapservice-v2", Server);
         }
     }
