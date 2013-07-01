@@ -3,6 +3,11 @@ jiracommand
 
 A simple utility to call a Jira 4.0 (old) webservice from the commandline.
 
+Download
+--------
+
+Pre-built version: https://s3.amazonaws.com/jiracommand-releases/jiracommand-v0.1.zip
+
 Usage
 -----
 
