@@ -13,10 +13,10 @@ Usage
 
 Run jiracommand without arguments to see options.
 
-Samples
+Example
 -------
 
-* jiracommand config setserver "https://myjiraserver"
-* jiracommand login -user bob
-* jiracommand addissue -project PRJ -summary "A new issue" -description "The PC is on fire"
-* jiracommand logout
+    jiracommand config setserver "https://myjiraserver"
+    jiracommand login -user bob
+    jiracommand addissue -project PRJ -summary "A new issue" -description "The PC is on fire"
+    jiracommand logout
