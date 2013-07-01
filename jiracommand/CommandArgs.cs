@@ -18,6 +18,8 @@ namespace jiracommand
 
         [ArgDescription("Jira server. Can also be specified in config.")]
         public string Server { get; set; }
+
+        [ArgDescription("Token to use for auth (normally not needed on the commandline)")]
         public string Token { get; set; }
         public string Project { get; set; }
 
@@ -50,6 +52,12 @@ namespace jiracommand
                 issue.project = Project;
                 issue.type = "3"; //task
                 issue.priority = "2";
+
+                if (args.Reporter != null && args.Reporter.Length > 0)
+                    issue.reporter = args.Reporter;
+
+                if (args.Assignee != null && args.Assignee.Length > 0)
+                    issue.assignee = args.Assignee;
 
                 if (args.Component != 0)
                     issue.components = new RemoteComponent[] { new RemoteComponent() { id = args.Component.ToString() } };
@@ -128,6 +136,7 @@ namespace jiracommand
         public string Description { get; set; }
         public string DescriptionFile { get; set; }
         public string Reporter { get; set; }
+        public string Assignee { get; set; }
 
         [ArgDescription("The component ID (see getoptions).")]
         public int Component { get; set; }
