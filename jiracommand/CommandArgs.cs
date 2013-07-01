@@ -10,6 +10,7 @@ namespace jiracommand
     [ArgExample("jiracommand config setserver \"https://...\"", "set a config property")]
     [ArgExample("jiracommand login -user bob -password \"123b$!!!\"", "login with a password on the commandline")]
     [ArgExample("jiracommand login -user dmull", "login with a password from a prompt")]
+    [TabCompletion]
     public class CommandArgs
     {
         static string serverFile = ".jiraserver";
@@ -43,7 +44,7 @@ namespace jiracommand
 
             using (var jira = ConnectToJira())
             {
-                string token = jira.login(args.User, args.Password.ConvertToNonsecureString());
+                string token = jira.login(args.User, args.ResolvePassword());
                 System.IO.File.WriteAllText(tokenFile, token);
             }
         }
@@ -176,7 +177,17 @@ namespace jiracommand
     {
         public string User { get; set; }
 
+        public string Password { get; set; }
+
         [ArgDescription("Password. You can skip and provide it interactively, too.")]
-        public SecureStringArgument Password { get; set; }
+        public SecureStringArgument PasswordOnDemand { get; set; }
+
+        public string ResolvePassword()
+        {
+            if (Password != null && Password.Length > 0)
+                return Password;
+            else
+                return PasswordOnDemand.ConvertToNonsecureString();
+        }
     }
 }
