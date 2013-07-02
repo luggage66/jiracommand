@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using PowerArgs;
+using log4net;
 
 namespace jiracommand
 {
@@ -25,6 +26,7 @@ namespace jiracommand
 
         public CommandArgs()
         {
+            
         }
 
         [ArgActionMethod, ArgDescription("gets an auth token from the server")]
