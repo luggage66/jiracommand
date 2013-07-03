@@ -1,7 +1,7 @@
 jiracommand
 ===========
 
-A simple utility to call a Jira 4.0 (old) webservice from the commandline.
+A simple utility to call a Jira 4.0 (old) webservice from the commandline. More documentation [in the wiki.](//github.com/luggage66/jiracommand/wiki)
 
 Download
 --------
